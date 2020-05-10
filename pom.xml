@@ -78,6 +78,11 @@
 	<build>
 		<plugins>
 			<plugin>
+				<groupId>org.flywaydb.enterprise</groupId>
+				<artifactId>flyway-maven-plugin</artifactId>
+				<version>6.4.1</version>
+			</plugin>
+			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
