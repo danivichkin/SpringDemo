@@ -1,6 +1,9 @@
 package com.example.spring.entity;
 
+import org.hibernate.validator.constraints.Length;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 public class Message {
@@ -9,6 +12,8 @@ public class Message {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @NotBlank(message = "Please fill the message")
+    @Length(max = 2048, message = "Message to long")
     private String text;
     private String tag;
 
