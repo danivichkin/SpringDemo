@@ -7,6 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import java.util.Collection;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -23,9 +24,6 @@ public class User implements UserDetails {
     @NotBlank(message = "Cant be empty")
     private String password;
 
-    @Transient
-    @NotBlank(message = "Cant be empty")
-    private String password2;
     private boolean active;
 
     @NotBlank(message = "Cant be empty")
@@ -37,6 +35,17 @@ public class User implements UserDetails {
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
     private Set<Role> roles;
+
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<Message> messages;
+
+    public Set<Message> getMessages() {
+        return messages;
+    }
+
+    public void setMessages(Set<Message> messages) {
+        this.messages = messages;
+    }
 
     public String getActivationCode() {
         return activationCode;
@@ -123,11 +132,16 @@ public class User implements UserDetails {
         this.roles = roles;
     }
 
-    public String getPassword2() {
-        return password2;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return id.equals(user.id);
     }
 
-    public void setPassword2(String password2) {
-        this.password2 = password2;
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }
