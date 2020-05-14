@@ -23,8 +23,8 @@ public class RegistrationController {
 
     private final static String CAPTCHA_URL = "https://www.google.com/recaptcha/api/siteverify?secret=%s&response=%s";
 
-    private UserService userService;
-    private RestTemplate restTemplate;
+    private final UserService userService;
+    private final RestTemplate restTemplate;
 
     public RegistrationController(UserService userService, RestTemplate restTemplate) {
         this.userService = userService;

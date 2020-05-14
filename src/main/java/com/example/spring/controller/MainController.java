@@ -30,12 +30,13 @@ import java.util.stream.Collectors;
 public class MainController {
 
     private final MessageRepo messageRepo;
-    @Value("${upload.path}")
-    private String uploadPath;
 
     public MainController(MessageRepo messageRepo) {
         this.messageRepo = messageRepo;
     }
+
+    @Value("${upload.path}")
+    private String uploadPath;
 
     @GetMapping("/")
     public String greeting() {
@@ -44,7 +45,7 @@ public class MainController {
 
     @GetMapping("/main")
     public String main(@RequestParam(required = false, defaultValue = "") String filter, Model model) {
-        Iterable<Message> messages = messageRepo.findAll();
+        Iterable<Message> messages;
 
         if (filter != null && !filter.isEmpty()) {
             messages = messageRepo.findByTag(filter);
@@ -66,37 +67,56 @@ public class MainController {
             Model model,
             @RequestParam("file") MultipartFile file
     ) throws IOException {
+
         message.setAuthor(user);
 
         if (bindingResult.hasErrors()) {
             Map<String, String> errorsMap = ControllerUtils.getErrors(bindingResult);
-
             model.mergeAttributes(errorsMap);
             model.addAttribute("message", message);
         } else {
-
+            saveFile(message, file);
             model.addAttribute("message", null);
-
             messageRepo.save(message);
         }
 
         Iterable<Message> messages = messageRepo.findAll();
 
+        model.addAttribute("filter", "");
         model.addAttribute("messages", messages);
 
-        return "main";
+        return "redirect:/main";
     }
 
+    private void saveFile(@Valid Message message, @RequestParam("file") MultipartFile file) throws IOException {
+        if (file != null && !file.getOriginalFilename().isEmpty()) {
+            File uploadDir = new File(uploadPath);
 
+            if (!uploadDir.exists()) {
+                uploadDir.mkdir();
+            }
+
+            String uuidFile = UUID.randomUUID().toString();
+            String resultFilename = uuidFile + "." + file.getOriginalFilename();
+
+            file.transferTo(new File(uploadPath + "/" + resultFilename));
+
+            message.setFilename(resultFilename);
+        }
+    }
 
     @GetMapping("/user-messages/{user}")
     public String userMessages(@AuthenticationPrincipal User currentUser,
                                @PathVariable(name = "user") User user,
-                               Model model
-    ) {
+                               @RequestParam(required = false) Message message,
+                               Model model) {
+
         Set<Message> messages = user.getMessages();
+
         model.addAttribute("messages", messages);
+        model.addAttribute("currentMessage", message);
         model.addAttribute("isCurrentUser", currentUser.equals(user));
+
         return "userMessages";
     }
 
@@ -109,6 +129,9 @@ public class MainController {
             @RequestParam("tag") String tag,
             @RequestParam("file") MultipartFile file
     ) throws IOException {
+
+        message.setAuthor(currentUser);
+
         if (message.getAuthor().equals(currentUser)) {
             if (!StringUtils.isEmpty(text)) {
                 message.setText(text);
@@ -118,6 +141,7 @@ public class MainController {
                 message.setTag(tag);
             }
 
+            saveFile(message, file);
 
             messageRepo.save(message);
         }

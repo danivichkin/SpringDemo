@@ -15,13 +15,14 @@ public class Message {
     @NotBlank(message = "Please fill the message")
     @Length(max = 2048, message = "Message to long")
     private String text;
+    @Length(max = 255, message = "Tag to long")
     private String tag;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User author;
 
-    private String fileName;
+    private String filename;
 
     Message(){}
 
@@ -60,12 +61,12 @@ public class Message {
         this.tag = tag;
     }
 
-    public String getFileName() {
-        return fileName;
+    public String getFilename() {
+        return filename;
     }
 
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
+    public void setFilename(String fileName) {
+        this.filename = fileName;
     }
 
     public Long getId() {
@@ -75,4 +76,6 @@ public class Message {
     public void setId(Long id) {
         this.id = id;
     }
+
+
 }

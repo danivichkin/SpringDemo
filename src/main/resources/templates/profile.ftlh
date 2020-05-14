@@ -2,7 +2,7 @@
 
 <@c.page>
     <h5>${username}</h5>
-    ${message?ifExists}
+    ${message!}
     <form method="post">
         <div class="form-group row">
             <label class="col-sm-2 col-form-label">Password:</label>
