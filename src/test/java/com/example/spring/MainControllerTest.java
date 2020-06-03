@@ -23,6 +23,7 @@ import static org.springframework.security.test.web.servlet.response.SecurityMoc
 @WithUserDetails("dru")
 public class MainControllerTest {
 
+    /*
     @Autowired
     private MockMvc mockMvc;
 
@@ -60,4 +61,6 @@ public class MainControllerTest {
                 .andDo(print())
                 .andExpect(status().isForbidden());
     }
+
+     */
 }

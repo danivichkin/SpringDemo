@@ -26,6 +26,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WithUserDetails(value = "dru")
 class ApplicationTests {
 
+	/*
+
 	@Autowired
 	private MockMvc mockMvc;
 
@@ -75,4 +77,6 @@ class ApplicationTests {
 				.andExpect(xpath("//*[@id='message-list']/div[@data-id='10']/div/i").string("#new one"));
 	}
 
+
+	 */
 }
