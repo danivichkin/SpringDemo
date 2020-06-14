@@ -1,39 +1,48 @@
 <#include "security.ftlh">
 <#import "login.ftlh" as l>
+<header>
+
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <a class="navbar-brand" href="/">
+                    <img src="/static/img/icons8-worker-id-card-48.png" width="48" height="48" alt="">
+                </a>
 
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="/">Sweater</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
+            <a class="navbar-brand" href="/">Букер.Поддержка</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="/">Home</a>
-            </li>
-            <#if user??>
-                <li class="nav-item">
-                    <a class="nav-link" href="/main">Messages</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/user-messages/${currentUserId}">My messages</a>
-                </li>
-            </#if>
-            <#if isAdmin>
-                <li class="nav-item">
-                    <a class="nav-link" href="/user">User list</a>
-                </li>
-            </#if>
-            <#if user??>
-                <li class="nav-item">
-                    <a class="nav-link" href="/user/profile">Profile</a>
-                </li>
-            </#if>
-        </ul>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Главная страница</a>
+                    </li>
+                    <#if user??>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/main">Сообщения</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/user-messages/${currentUserId}">Мои сообщения</a>
+                        </li>
+                    </#if>
+                    <#if isAdmin>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/user">Список пользователей</a>
+                        </li>
+                    </#if>
+                    <#if user??>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/user/profile">Профиль</a>
+                        </li>
+                    </#if>
+                </ul>
 
-        <div class="navbar-text mr-3"><#if user??>${name}<#else>Please Log in</#if></div>
-        <@l.logout />
-    </div>
-</nav>
+                <div class="navbar-text mr-3"><#if user??>${name}<#else></#if></div>
+                <@l.logout />
+            </div>
+        </nav>
+
+</header>
+
