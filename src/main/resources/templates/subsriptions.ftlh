@@ -2,6 +2,9 @@
 
 <@c.page>
     <h3>${userChannel.username}</h3>
+    <#if isAdmin>
+        ${user.email}
+    </#if>
     <div>${type}</div>
     <ul class="list-group">
         <#list users as user>

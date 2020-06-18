@@ -134,7 +134,9 @@ public class MainController {
             @RequestParam("file") MultipartFile file
     ) throws IOException {
 
-        message.setAuthor(currentUser);
+        if (currentUser != null){
+            message.setAuthor(currentUser);
+        }
 
         if (message.getAuthor().equals(currentUser)) {
             if (!StringUtils.isEmpty(text)) {

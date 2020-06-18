@@ -13,8 +13,12 @@ body {
     background: url("/static/img/bg.png");
 }
 
-.footer{
+.captcha{
+    margin-bottom: 15px;
+}
 
+.lll{
+    margin-bottom: 30px;
 }
 
 .subs{
@@ -33,10 +37,7 @@ body {
     margin-bottom: 30px;
 }
 
-img {
-    min-width: 100%;
-    height: auto;
-}
+
 
 #footer {
     position: absolute;

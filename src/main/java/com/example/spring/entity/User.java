@@ -30,6 +30,7 @@ public class User implements UserDetails {
     @NotBlank(message = "Cant be empty")
     @Email(message = "Is not correct")
     private String email;
+
     private String activationCode;
 
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
